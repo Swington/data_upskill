@@ -31,16 +31,19 @@ if __name__ == "__main__":
     ).resample_data(train_data, ATTRIBUTE_COLUMN_NAMES, LABEL)
 
     linear_regression_model = linear_model.LinearRegression()
+    logistic_regression_model = linear_model.LogisticRegression()
 
     linear_regression_model.fit(attributes_data_resampled, label_data_resampled)
+    logistic_regression_model.fit(attributes_data_resampled, label_data_resampled)
 
     test_data = DataScaler.scale(
         test_data, preprocessing.StandardScaler(), ATTRIBUTE_COLUMN_NAMES
     )
-
-    test_attributes_data = test_data[ATTRIBUTE_COLUMN_NAMES].values
     test_label_data = test_data[[LABEL]].values[:, 0]
+    test_attributes_data = test_data[ATTRIBUTE_COLUMN_NAMES].values
+
     output_label_data = linear_regression_model.predict(test_attributes_data)
+    # output_label_data = logistic_regression_model.predict(test_attributes_data)
 
     fpr, tpr, thresholds = metrics.roc_curve(
         test_label_data, output_label_data, pos_label=1

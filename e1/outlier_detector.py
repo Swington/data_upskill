@@ -21,6 +21,7 @@ def get_z_score_univariate_outliers(data_frame: DataFrame, variate: str) -> np.n
 
 
 def get_iqr_multivariate_outliers(data_frame: DataFrame) -> np.ndarray:
+    # 1.5 param min max
     data_frame = data_frame.iloc[:, 1:]
     q1 = data_frame.quantile(0.25)
     q3 = data_frame.quantile(0.75)
